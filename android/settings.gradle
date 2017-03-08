@@ -1,0 +1,3 @@
+rootProject.name = 'instaclone'
+
+include ':app'
