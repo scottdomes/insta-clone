@@ -52,9 +52,10 @@ export default class MainNavigation extends Component{
   render() {
     const { horizontal } = this.props;
     const scrollViewStyle = horizontal ? styles.scrollView : styles.scrollViewVertical;
+    const headerOffset = this.state.currentTab < 1 ? ((1 - this.state.currentTab) * 100) + '%' : 0
     return (
       <View style={styles.container}>
-        <Header currentTab={this.state.currentTab} />
+        <Header currentTab={this.state.currentTab} offset={{ left: headerOffset }}/>
         <ScrollView
           ref={(c) => this._scrollView = c}
           horizontal={horizontal}

@@ -15,11 +15,11 @@ export default class Header extends Component{
   }
 
   render() {
-    // console.log((this.props.currentTab * window.width) / 2)
-    console.log()
     const multiplier = Math.abs((this.props.currentTab - 1) / 2)
+    const offset = this.props.currentTab < 1 ? (1 - this.props.currentTab) * window.width : 0
+    console.log(offset)
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { left: offset }]}>
         <View style={styles.iconsContainer}>
           <Image 
             style={styles.sideIcons} 
