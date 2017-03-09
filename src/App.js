@@ -5,17 +5,22 @@ import {
   View,
 } from 'react-native';
 import MainNavigation from './components/MainNavigation'
+import WrapperNavigation from './components/WrapperNavigation'
 import { StreamContainer, MessagesContainer, CameraContainer } from './containers'
 
 export default class App extends Component{
   render() {
     return (
-      <MainNavigation 
+      <WrapperNavigation 
         routes={[
-          {  component: CameraContainer },
-          {  component: StreamContainer },
-          {  component: MessagesContainer }
+          <CameraContainer/>,
+          <MainNavigation 
+            routes={[  
+              <StreamContainer/>,
+              <MessagesContainer/>
+            ]}/>
         ]}/>
+        
     )
   }
 }

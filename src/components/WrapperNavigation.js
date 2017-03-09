@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react'
 import { ScrollView, Dimensions, View, StyleSheet, Text } from 'react-native';
-import Header from './Header'
+import MainNavigation from './MainNavigation'
 
 const window = Dimensions.get('window');
 
-export default class MainNavigation extends Component{
+export default class WrapperNavigation extends Component{
   state = { currentTab: 1 }
 
   static propTypes = {
@@ -39,7 +39,7 @@ export default class MainNavigation extends Component{
     return this.props.routes.map((route, index) => {
       return (
         <View key={index} style={itemStyle}>
-          {route}
+          { React.cloneElement(route, { wrapperTab: this.state.currentTab }) }
         </View>
       );
     });
@@ -52,12 +52,9 @@ export default class MainNavigation extends Component{
   render() {
     const { horizontal } = this.props;
     const scrollViewStyle = horizontal ? styles.scrollView : styles.scrollViewVertical;
-    const headerOffset = this.state.currentTab === 0 ? -((1 - this.props.wrapperTab) * 100) + '%' : ((1 - this.state.currentTab) * 100) + '%'
-    console.log(this.props.wrapperTab, this.state.currentTab)
-    const currentTab = this.props.wrapperTab < 1 ? -(1 - this.props.wrapperTab) : this.state.currentTab
+    const headerOffset = this.state.currentTab < 1 ? ((1 - this.state.currentTab) * 100) + '%' : 0
     return (
       <View style={styles.container}>
-        <Header currentTab={currentTab} offset={{ left: headerOffset }}/>
         <ScrollView
           ref={(c) => this._scrollView = c}
           horizontal={horizontal}

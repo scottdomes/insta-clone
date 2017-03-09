@@ -4,6 +4,7 @@ import {
   Text,
   View,
   Image,
+  ScrollView,
   Dimensions
 } from 'react-native';
 
@@ -14,12 +15,15 @@ export default class Header extends Component{
     
   }
 
+  getUnderlineOffset() {
+    return this.props.currentTab < 1 ? (1 - this.props.currentTab) * window.width : 0
+  }
+
   render() {
-    const multiplier = Math.abs((this.props.currentTab - 1) / 2)
-    const offset = this.props.currentTab < 1 ? (1 - this.props.currentTab) * window.width : 0
-    console.log(offset)
+    const multiplier = Math.abs(((this.props.currentTab + 1) - 1) / 2)
+    const offset = this.getUnderlineOffset()
     return (
-      <View style={[styles.container, { left: offset }]}>
+      <View style={styles.container}>
         <View style={styles.iconsContainer}>
           <Image 
             style={styles.sideIcons} 
@@ -35,7 +39,7 @@ export default class Header extends Component{
             source={require('../assets/messages.png')}/>
         </View>
         <View style={styles.underlineContainer}>
-          <View style={[styles.underline, { left: ((this.props.currentTab * window.width) / 2 - 50), width: 100 - (100 * multiplier)  }]}/>
+          <View style={[styles.underline, { left: (((this.props.currentTab + 1) * window.width) / 2 - 50), width: 100 - (100 * multiplier)  }]}/>
         </View>
       </View>
     )
@@ -53,7 +57,8 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
     flexDirection: 'column',
     justifyContent: 'center',
-    zIndex: 999
+    zIndex: 999,
+    overflow: 'hidden'
   },
   underlineContainer: {
 
@@ -64,6 +69,9 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 100
+  },
+  scrollView: {
+    flexDirection: 'row',
   },
   sideIcons: {
     marginTop: 8,
